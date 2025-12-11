@@ -24,7 +24,7 @@ class Weather {
   double? maxTemperature;
   double? minTemperature;
 
-  List<Weather>? forecast;
+  List<Weather?>? forecast;
 
   Weather(
       {this.id,
@@ -57,7 +57,7 @@ class Weather {
         ),
         infoWindow: InfoWindow(title: cityName, snippet: '$temperature°'),
         icon: await BitmapDescriptor.asset(
-            ImageConfiguration(size: Size(8, 8)), iconCode!.toWeatherIcon()),
+            ImageConfiguration(size: Size(48, 48)), iconCode!.toWeatherIcon()),
       );
 
   static Weather fromJson(Map<String, dynamic> json, {bool isList = false}) {

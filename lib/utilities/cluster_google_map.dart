@@ -20,20 +20,20 @@ class ClusterGoogleMap extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _ClusterGoogleMapState createState() => _ClusterGoogleMapState();
+  ClusterGoogleMapState createState() => ClusterGoogleMapState();
 }
 
-class _ClusterGoogleMapState extends State<ClusterGoogleMap> {
+class ClusterGoogleMapState extends State<ClusterGoogleMap> {
   late Fluster<MapMarker> _fluster;
 
   // ignore: unused_field
   List<Marker> _markerList = [];
-
+  final Set<Marker> _markers = {};
   // ignore: unused_field
   late GoogleMapController _mapController;
-  double _currentZoom = 12.0;
+  double _currentZoom = 14.0;
 
-  _ClusterGoogleMapState();
+  ClusterGoogleMapState();
 
   @override
   void initState() {
@@ -41,6 +41,8 @@ class _ClusterGoogleMapState extends State<ClusterGoogleMap> {
     widget.controller.addListener(() {
       _initFluster(widget.controller.value);
     });
+    _markers.addAll(widget.markerList);
+    _initFluster(widget.controller.value);
   }
 
   @override
@@ -50,21 +52,24 @@ class _ClusterGoogleMapState extends State<ClusterGoogleMap> {
         onMapCreated: _onMapCreated,
         onCameraMove: _onCameraMove,
         onCameraIdle: _onCameraIdle,
-        markers: Set<Marker>.of(widget.markerList),
+        markers: _markers,
         initialCameraPosition: CameraPosition(
           target: widget.center,
           zoom: _currentZoom,
         ),
         gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>{
           Factory<OneSequenceGestureRecognizer>(
-            () => EagerGestureRecognizer(),
+                () => EagerGestureRecognizer(),
           ),
         });
   }
 
   void _onMapCreated(GoogleMapController controller) {
     _mapController = controller;
-    _initFluster(widget.controller.value);
+    setState(() {
+      _markers.addAll(widget.markerList);
+      _initFluster(widget.controller.value);
+    });
   }
 
   void _onCameraMove(CameraPosition cameraPosition) {
@@ -83,12 +88,12 @@ class _ClusterGoogleMapState extends State<ClusterGoogleMap> {
       extent: 2048,
       nodeSize: 64,
       points: mapMarkerList,
-      createCluster: (BaseCluster cluster,
-          double lng,
-          double lat,) =>
+      createCluster: (BaseCluster? cluster,
+          double? lng,
+          double? lat,) =>
           mapMarkerList
-              .firstWhere((marker) => marker.id == cluster.childMarkerId)
-              .toCluster(cluster),
+              .firstWhere((marker) => marker.id == cluster?.childMarkerId)
+              .toCluster(cluster!),
     );
     _doCluster();
   }

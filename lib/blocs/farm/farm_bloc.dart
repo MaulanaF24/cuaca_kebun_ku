@@ -23,7 +23,7 @@ class FarmBloc extends Bloc<FarmEvent, FarmState> {
       }
     });
 
-    on<AddFarm>((event, state) async {
+    on<AddFarmEvent>((event, state) async {
       try {
         state(Loading());
         final model = event.farmModel;

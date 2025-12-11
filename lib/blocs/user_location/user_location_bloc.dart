@@ -11,37 +11,28 @@ export 'package:cuaca_kebun_ku/blocs/user_location/user_location_state.dart';
 class UserLocationBloc extends Bloc<UserLocationEvent, UserLocationState> {
   Position? position;
 
-  UserLocationBloc(super.initialState);
-
-  UserLocationState get initialState => InitialUserLocationState();
-
-  Stream<UserLocationState> mapEventToState(UserLocationEvent event) async* {
-    if (event is GetUserLocation) {
-      yield* mapGetUserLocationToState(event);
-    }
-  }
-
-  Stream<UserLocationState> mapGetUserLocationToState(
-      GetUserLocation event) async* {
-    try {
-      PermissionStatus permission = await Permission.location.request();
-      if (permission == PermissionStatus.granted) {
-        position = await Geolocator.getCurrentPosition(
-            locationSettings: LocationSettings(
-              accuracy: LocationAccuracy.best,
-              distanceFilter: 0
-            ));
-        final locationEnabled = await Geolocator.isLocationServiceEnabled();
-        if (locationEnabled) {
-          yield ShowUserLocation(LatLng(position!.latitude, position!.longitude));
+  UserLocationBloc() : super(InitialUserLocationState()) {
+    on<GetUserLocation>((event, state) async {
+      try {
+        PermissionStatus permission = await Permission.location.request();
+        if (permission == PermissionStatus.granted) {
+          position = await Geolocator.getCurrentPosition(
+              locationSettings: LocationSettings(
+                  accuracy: LocationAccuracy.best,
+                  distanceFilter: 0
+              ));
+          final locationEnabled = await Geolocator.isLocationServiceEnabled();
+          if (locationEnabled) {
+            state(ShowUserLocation(LatLng(position!.latitude, position!.longitude)));
+          } else {
+            state(LocationIsDisable());
+          }
         } else {
-          yield LocationIsDisable();
+          state(LocationIsDenied());
         }
-      } else {
-        yield LocationIsDenied();
+      } catch (e) {
+        state(FailedUserLocation(e.toString()));
       }
-    } catch (e) {
-      yield FailedUserLocation(e.toString());
-    }
+    });
   }
 }

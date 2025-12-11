@@ -9,10 +9,10 @@ class FetchListFarm extends FarmEvent {
   String toString() => 'fetch list farm';
 }
 
-class AddFarm extends FarmEvent {
+class AddFarmEvent extends FarmEvent {
   final FarmModel farmModel;
 
-  AddFarm(this.farmModel);
+  AddFarmEvent(this.farmModel);
 
   @override
   String toString() => 'add farm';
