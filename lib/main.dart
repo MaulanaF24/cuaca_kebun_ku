@@ -1,5 +1,6 @@
 import 'package:cuaca_kebun_ku/app_route.dart';
 import 'package:cuaca_kebun_ku/blocs/farm/farm_bloc.dart';
+import 'package:cuaca_kebun_ku/blocs/get_weather/get_weather_bloc.dart';
 import 'package:cuaca_kebun_ku/blocs/map_weather/map_weather_bloc.dart';
 import 'package:cuaca_kebun_ku/blocs/schedule/schedule_bloc.dart';
 import 'package:cuaca_kebun_ku/blocs/user_location/user_location_bloc.dart';
@@ -25,6 +26,7 @@ class MyApp extends ConsumerWidget {
           BlocProvider<UserLocationBloc>(create: (context) => UserLocationBloc()),
           BlocProvider<MapWeatherBloc>(create: (context) => MapWeatherBloc()),
           BlocProvider<ScheduleBloc>(create: (context) => ScheduleBloc()),
+          BlocProvider<GetWeatherBloc>(create: (context) => GetWeatherBloc()),
         ],
         child: BlocBuilder<UserLocationBloc, UserLocationState>(
           builder: (context, state) {

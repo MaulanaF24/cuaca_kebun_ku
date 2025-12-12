@@ -1,4 +1,3 @@
-
 import 'package:cuaca_kebun_ku/models/weather_model.dart';
 import 'package:cuaca_kebun_ku/repositories/network/weather_api_service.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -16,8 +15,8 @@ class WeatherRepository {
    return response;
  }
 
- Future<List<Weather?>> getListWeather(String city) async {
-    final response = await _weatherApiService.getForecast(city);
+ Future<List<Weather?>> getListWeather(LatLng latLng) async {
+    final response = await _weatherApiService.getForecast(latLng);
     return response;
  }
 

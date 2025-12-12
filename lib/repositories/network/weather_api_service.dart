@@ -17,7 +17,7 @@ class WeatherApiService {
     });
     final response = await httpClient.get(url);
     final json = jsonDecode(response.body);
-    return Weather.fromJson(json, isList: false);
+    return Weather.fromJson(json, isForecast: false);
   }
 
   Future<Weather> getWeatherByCity(String city) async {
@@ -28,7 +28,7 @@ class WeatherApiService {
     });
     final response = await httpClient.get(url);
     final json = jsonDecode(response.body);
-    return Weather.fromJson(json, isList: false);
+    return Weather.fromJson(json, isForecast: false);
   }
 
   Future<List<Weather?>> getListWeather(LatLng latLng) async {
@@ -45,15 +45,16 @@ class WeatherApiService {
     return weathers;
   }
 
-  Future<List<Weather?>> getForecast(String cityName) async {
+  Future<List<Weather?>> getForecast(LatLng latLng) async {
     final url = Uri.https(baseUrl, "/data/2.5/forecast", {
-      'q' : cityName,
+      'lat' : latLng.latitude.toString(),
+      'lon' : latLng.longitude.toString(),
       'units' : 'metric',
       'appid' : apiKey
     });
     final res = await httpClient.get(url);
     final forecastJson = json.decode(res.body);
-    List<Weather?> weathers = Weather.fromForecastJson(forecastJson,false);
+    List<Weather?> weathers = Weather.fromForecastJson(forecastJson, true);
     return weathers;
   }
 }

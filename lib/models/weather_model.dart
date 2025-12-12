@@ -60,7 +60,7 @@ class Weather {
             ImageConfiguration(size: Size(48, 48)), iconCode!.toWeatherIcon()),
       );
 
-  static Weather fromJson(Map<String, dynamic> json, {bool isList = false}) {
+  static Weather fromJson(Map<String, dynamic> json, {bool isForecast = false, LatLng? position}) {
     final weather = json['weather'][0];
     final temp = json['main']['temp'];
     final maxTemp = json['main']['temp_max'];
@@ -68,7 +68,11 @@ class Weather {
     final windSpeed = json['wind']['speed'];
     var latitude;
     var longitude;
-    if (isList) {
+
+    if (isForecast) {
+      latitude = position?.latitude;
+      longitude = position?.longitude;
+    } else {
       latitude = json['coord']['lat'];
       longitude = json['coord']['lon'];
     }
@@ -92,16 +96,19 @@ class Weather {
   }
 
   static List<Weather?> fromForecastJson(Map<String, dynamic> json,
-      bool isList) {
+      bool isForecast) {
+    final latitude = json['city']['coord']['lat'];
+    final longitude = json['city']['coord']['lon'];
+    final position = LatLng(latitude, longitude);
     final weathers = (json['list'] as List)
-        .map((e) => e == null ? null : Weather.fromJson(e, isList: isList))
+        .map((e) => e == null ? null : Weather.fromJson(e, isForecast: isForecast, position: position))
         .toList();
 
     return weathers;
   }
 
   IconData getIconData() {
-    switch (this.iconCode) {
+    switch (iconCode) {
       case '01d':
         return WeatherIcons.clear_day;
       case '01n':

@@ -11,18 +11,26 @@ class CurrentConditions extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Icon(
-          weather.getIconData(),
-          size: 70,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              weather.getIconData(),
+              size: 24,
+            ),
+            SizedBox(
+              width: 8,
+            ),
+            Text(
+              '${weather.temperature}°',
+              style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w100),
+            ),
+          ],
         ),
         SizedBox(
-          height: 20,
-        ),
-        Text(
-          '${weather.temperature}°',
-          style: TextStyle(
-              fontSize: 100,
-              fontWeight: FontWeight.w100),
+          width: 8,
         ),
         Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
           ValueTile("max",

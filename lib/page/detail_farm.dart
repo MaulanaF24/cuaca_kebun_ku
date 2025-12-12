@@ -30,7 +30,7 @@ class _DetailFarmState extends State<DetailFarm> {
             ]),
             Expanded(
               child: TabBarView(children: [
-                Maps(LatLng(widget.farmModel.latitude, widget.farmModel.longitude)),
+                Maps(widget.farmModel),
                 FarmSchedule(widget.farmModel),
               ]),
             ),
