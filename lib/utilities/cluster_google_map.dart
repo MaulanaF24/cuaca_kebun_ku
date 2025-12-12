@@ -57,6 +57,8 @@ class ClusterGoogleMapState extends State<ClusterGoogleMap> {
           target: widget.center,
           zoom: _currentZoom,
         ),
+        zoomControlsEnabled: false,
+        myLocationButtonEnabled: false,
         gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>{
           Factory<OneSequenceGestureRecognizer>(
                 () => EagerGestureRecognizer(),

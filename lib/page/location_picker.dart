@@ -68,18 +68,12 @@ class _LocationPickerState extends State<LocationPicker> {
                 onMapCreated: (GoogleMapController controller) {
                   _mapController = controller;
                 },
-                onTap: (location) async {
-                  _address = await _getAddressFromLatLong(_selectedLocation!);
-                  setState(() {
-                    _selectedLocation = location;
-                  });
-                },
                 onCameraMove: (position) {
-                  Future.delayed(const Duration(seconds: 3), () async {
-                    _selectedLocation = position.target;
-                    _address = await _getAddressFromLatLong(_selectedLocation!);
-                    setState(() {});
-                  });
+                  _selectedLocation = position.target;
+                },
+                onCameraIdle: () async {
+                  _address = await _getAddressFromLatLong(_selectedLocation!);
+                  setState(() {});
                 },
                 markers: _selectedLocation == null
                     ? {}

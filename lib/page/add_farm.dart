@@ -40,9 +40,10 @@ class _AddFarmState extends State<AddFarm> {
       body: BlocListener<FarmBloc, FarmState>(
         listener: (context, state) {
           if (state is Loading) {
-            CircularProgressIndicator();
+            _showLoadingDialog(context);
           }
           if (state is SuccessCreateFarm) {
+            _dismissLoadingDialog(context);
             showDialog(context: context, builder: (context) {
               return AlertDialog(
                 title: Text('Success Crate Farm'),
@@ -165,12 +166,12 @@ class _AddFarmState extends State<AddFarm> {
                       ),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.green,
+                          backgroundColor: Colors.blueGrey,
                           foregroundColor: Colors.white,
                           minimumSize: Size.fromHeight(50),
                         ),
                         onPressed: () {
-                          if (_model != null) context.read<FarmBloc>().add(AddFarmEvent(_model!));
+                          if (_formKey.currentState!.validate()) context.read<FarmBloc>().add(AddFarmEvent(_model!));
                         },
                         child: Text('Tambah Kebun'),
                       ),
@@ -180,6 +181,33 @@ class _AddFarmState extends State<AddFarm> {
           ],
         ),
       ),
+    );
+  }
+
+  void _dismissLoadingDialog(BuildContext context) {
+    if (context.mounted) {
+      Navigator.of(context, rootNavigator: true).pop();
+    }
+  }
+
+  void _showLoadingDialog(BuildContext context) {
+    AlertDialog alert = AlertDialog(
+      content: Row(
+        children: [
+          const CircularProgressIndicator(),
+          Container(
+              margin: const EdgeInsets.only(left: 15),
+              child: const Text("Loading...")),
+        ],
+      ),
+    );
+
+    showDialog(
+      barrierDismissible: false, // Prevents dismissal by tapping outside
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 

@@ -43,6 +43,6 @@ class MapMarker extends Clusterable {
           position.longitude,
         ),
         icon: await BitmapDescriptor.asset(
-            ImageConfiguration(size: Size(16, 16)), imageUrl.toWeatherIcon()),
+            ImageConfiguration(size: Size(32, 32)), imageUrl.toWeatherIcon()),
       );
 }

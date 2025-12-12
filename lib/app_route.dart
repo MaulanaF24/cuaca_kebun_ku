@@ -1,16 +1,16 @@
 import 'package:cuaca_kebun_ku/models/farm_model.dart';
 import 'package:cuaca_kebun_ku/page/add_farm.dart';
+import 'package:cuaca_kebun_ku/page/add_schedule.dart';
 import 'package:cuaca_kebun_ku/page/detail_farm.dart';
 import 'package:cuaca_kebun_ku/page/list_farm.dart';
 import 'package:cuaca_kebun_ku/page/location_picker.dart';
-import 'package:cuaca_kebun_ku/page/maps.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class RouteNamesConst {
   static const farmRouteName = 'farm';
   static const addFarmRouteName = 'add farm';
+  static const addScheduleRouteName = 'add schedule';
   static const locationPickerRouteName = 'location picker';
 }
 
@@ -24,9 +24,20 @@ final routerProvider = Provider<GoRouter>((ref) {
           final farmModel = state.extra as FarmModel;
           return DetailFarm(farmModel);
         }),
-    GoRoute(path: '/addFarm', builder: (context, state) => AddFarm()),
+    GoRoute(
+        path: '/farm/addSchedule',
+        name: RouteNamesConst.addScheduleRouteName,
+        builder: (context, state) {
+          final farmModel = state.extra as FarmModel;
+          return AddSchedule(farmModel);
+        }),
+    GoRoute(
+        path: '/addFarm',
+        name: RouteNamesConst.addFarmRouteName,
+        builder: (context, state) => AddFarm()),
     GoRoute(
         path: '/addFarm/locationPicker',
+        name: RouteNamesConst.locationPickerRouteName,
         builder: (_, state) => LocationPicker()),
   ]);
 });
