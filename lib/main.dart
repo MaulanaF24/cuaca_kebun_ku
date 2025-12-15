@@ -32,6 +32,7 @@ class MyApp extends ConsumerWidget {
           builder: (context, state) {
             return MaterialApp.router(
                 routerConfig: goRouter,
+                debugShowCheckedModeBanner: false,
                 title: 'Cuaca Kebun Ku',
                 theme: ThemeData(
                   colorScheme:

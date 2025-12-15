@@ -107,7 +107,7 @@ class _LocationPickerState extends State<LocationPicker> {
                         SizedBox(height: 8.0),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.green,
+                            backgroundColor: Colors.blueGrey,
                             foregroundColor: Colors.white,
                             minimumSize: Size.fromHeight(50),
                           ),
