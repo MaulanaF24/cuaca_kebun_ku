@@ -26,7 +26,8 @@ class _AddScheduleState extends State<AddSchedule> {
   final TextEditingController _tanggalPemeliharaan = TextEditingController();
   final TextEditingController _catatan = TextEditingController();
   final TextEditingController _kegiatan = TextEditingController();
-  final List<String> _jenisOptions = ['Pemupukan', 'Pemeliharaan', 'Panen'];
+  final List<String> _jenisOptions = ['Pemupukan', 'Pemeliharaan', 'Panen', 'Herbisida'];
+  final List<String> _satuanOptions = ['Botol', 'Karung/Kg', 'Herbisida'];
   DateTime? _selectedDate;
   MaintenanceSchedule? _model;
 
@@ -35,7 +36,7 @@ class _AddScheduleState extends State<AddSchedule> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text('Add Farm'),
+        title: Text('Add Schedule'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: BlocListener<ScheduleBloc, ScheduleState>(
@@ -48,7 +49,7 @@ class _AddScheduleState extends State<AddSchedule> {
             key: _formKey,
             onChanged: () {
               _model = MaintenanceSchedule(
-                  id: 'id',
+                  id: 'id',  
                   kebunId: widget.farmModel.id,
                   jenisPemeliharaan: _jenisPemeliharaan.value.text,
                   luasLahan: _luasLahan.value.text,

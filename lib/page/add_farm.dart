@@ -149,7 +149,7 @@ class _AddFarmState extends State<AddFarm> {
                         controller: _longitude,
                         readOnly: true,
                         decoration: InputDecoration(
-                            labelText: 'Nama Kebun',
+                            labelText: 'Longitude',
                             border: OutlineInputBorder(),
                             focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
